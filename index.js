@@ -36,7 +36,7 @@ bot.on('message', (msg) => {
         }
         //console.log( tweet.id )
         
-        //bot.sendMessage(dotenv.TG_MY_CHAT_ID, msg.from.username + ' ' + 'ha publicado un tweet')
+        bot.sendMessage(process.env.MY_CHAT_ID, msg.from.username + ' ' + 'ha publicado un tweet')
         bot.sendMessage(msg.chat.id, respuestaEnChat)
     })
     
