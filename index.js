@@ -6,10 +6,10 @@ const TG_API_KEY = process.env.TG_API_KEY
 
 const bot = new TelegramBot(TG_API_KEY, {polling: true})
 const twitter_client = new Twitter({
-    consumer_key:        process.env.TW_ACCESS_TOKEN_KEY,
-    consumer_secret:     process.env.TW_ACCESS_TOKEN_SECRET_KEY,
-    access_token_key:    process.env.TW_CONSUMER_KEY,
-    access_token_secret: process.env.TW_CONSUMER_SECRET_KEY
+    access_token_key:    process.env.TW_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TW_ACCESS_TOKEN_SECRET_KEY,
+    consumer_key:        process.env.TW_CONSUMER_KEY,
+    consumer_secret:     process.env.TW_CONSUMER_SECRET_KEY
 })
 
 // recivo mensaje de Telegram
