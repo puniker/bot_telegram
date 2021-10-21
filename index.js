@@ -19,9 +19,9 @@ bot.on('message', (msg) => {
 
     //console.log(msg.from.username + ': ' + msg.from.id + ' => ' + msg.text)
     var generated_tweet_url = 'https://twitter.com/punikerBot/status/'
-    var tweet_text = msg.from.id + ' ' + msg.from.username + ': ' + msg.text
+    var tweet_text = msg.from.username + ': ' + msg.text
     if ( msg.from.last_name ) {
-        var tweet_text = msg.from.id + ' ' + msg.from.first_name + ' ' + msg.from.last_name + ': ' + msg.text
+        var tweet_text = msg.from.first_name + ' ' + msg.from.last_name + ': ' + msg.text
     } 
     // publico tweet
     twitter_client.post('statuses/update', {status: tweet_text}, function(error, tweet, response) {
