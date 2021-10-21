@@ -2,35 +2,26 @@ const dotenv = require('dotenv').config().parsed
 const TelegramBot = require('node-telegram-bot-api')
 const Twitter = require('twitter');
 
-const TG_API_KEY = dotenv.TG_API_KEY
+const TG_API_KEY = process.env.TG_API_KEY
 
 const bot = new TelegramBot(TG_API_KEY, {polling: true})
 const twitter_client = new Twitter({
-    consumer_key:        dotenv.TW_CONSUMER_KEY,
-    consumer_secret:     dotenv.TW_CONSUMER_SECRET,
-    access_token_key:    dotenv.TW_ACCESS_TOKEN_KEY,
-    access_token_secret: dotenv.TW_ACCESS_TOKEN_SECRET
+    consumer_key:        process.env.TW_ACCESS_TOKEN_KEY,
+    consumer_secret:     process.env.TW_ACCESS_TOKEN_SECRET_KEY,
+    access_token_key:    process.env.TW_CONSUMER_KEY,
+    access_token_secret: process.env.TW_CONSUMER_SECRET_KEY
 })
-
-
-//twitter_client.post('statuses/update', {status: 'I am a tweet'}, function(error, tweet, response) {
-//    console.log( error )
-//    if (!error) {
-//      console.log(tweet);
-//    }
-//});
-
 
 // recivo mensaje de Telegram
 bot.on('message', (msg) => {
     
     //console.log( msg )
 
-    console.log(msg.from.username + ': ' + msg.from.id + ' => ' + msg.text)
+    //console.log(msg.from.username + ': ' + msg.from.id + ' => ' + msg.text)
     var generated_tweet_url = 'https://twitter.com/punikerBot/status/'
-    var tweet_text = msg.from.username + ': ' + msg.text
+    var tweet_text = msg.from.id + ' ' + msg.from.username + ': ' + msg.text
     if ( msg.from.last_name ) {
-        var tweet_text = msg.from.first_name + ' ' + msg.from.last_name + ': ' + msg.text
+        var tweet_text = msg.from.id + ' ' + msg.from.first_name + ' ' + msg.from.last_name + ': ' + msg.text
     } 
     // publico tweet
     twitter_client.post('statuses/update', {status: tweet_text}, function(error, tweet, response) {
@@ -45,7 +36,7 @@ bot.on('message', (msg) => {
         }
         //console.log( tweet.id )
         
-        bot.sendMessage(dotenv.TG_MY_CHAT_ID, msg.from.username + ' ' + 'ha publicado un tweet')
+        //bot.sendMessage(dotenv.TG_MY_CHAT_ID, msg.from.username + ' ' + 'ha publicado un tweet')
         bot.sendMessage(msg.chat.id, respuestaEnChat)
     })
     
