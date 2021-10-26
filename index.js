@@ -1,3 +1,5 @@
+const express = require('express')
+const cors = require('cors')
 const dotenv = require('dotenv').config().parsed
 const TelegramBot = require('node-telegram-bot-api')
 const Twitter = require('twitter');
@@ -42,3 +44,12 @@ bot.on('message', (msg) => {
     
 
 })
+
+const app = express()
+app.use( cors() )
+ 
+app.get('/', function (req, res) {
+  res.json({'status':'Bot levantado'})
+})
+ 
+app.listen(process.env.PORT || 3080)
