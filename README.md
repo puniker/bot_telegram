@@ -21,8 +21,10 @@ $ npm run dev
 
 Se utilizan las siguientes variables de entorno:
 - PORT
+
 **Claves Telegram**
 - MY_CHAT_ID
+
 **Claves Twitter**
 - TG_API_KEY
 - TW_ACCESS_TOKEN_KEY
