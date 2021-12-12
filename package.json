@@ -2,19 +2,18 @@
   "name": "bot-telegram",
   "version": "1.0.0",
   "description": "",
+  "author": "Iker Sastre",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "killport": "npx kill-port 8080",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
     "node-telegram-bot-api": "0.54.0",
     "twitter": "1.7.1"
   },
