@@ -1,3 +1,5 @@
+const express = require('express')
+const cors = require('cors')
 require('dotenv').config()
 const TelegramConnection = require('./connections/Telegram')
 const PostTwit = require('./controller/PostTwit')
@@ -14,3 +16,14 @@ TelegramConnection.on('message', async (msg) => {
     SendTelegramMsg(PostTwRes, msg.chat.id)
 
 })
+
+
+
+const app = express()
+app.use( cors() )
+
+app.get('/', function (req, res) {
+  res.json({'status':'Bot levantado'})
+})
+
+app.listen(process.env.PORT || 3080) 
