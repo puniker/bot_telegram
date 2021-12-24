@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 const TelegramConnection = require('./connections/Telegram')
-const {Start, Info, Bot} = require('./routes')
+const {Start, Info, Bot, Issues} = require('./routes')
 
 
 TelegramConnection.on('message', async (msg) => {
@@ -11,6 +11,8 @@ TelegramConnection.on('message', async (msg) => {
     Start(msg)
   } else if ( msg.text === '/info' || msg.text === '/Info' ) {
     Info(msg)
+  }else if (msg.text === '/issues' || msg.text === '/Issues') {
+    Issues(msg)
   } else {
     Bot(msg)
   }
