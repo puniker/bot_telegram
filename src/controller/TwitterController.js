@@ -1,4 +1,5 @@
 const TwitterConnection = require('../connections/Twitter')
+const fs = require('fs')
 
 const PostTwit = ( msg ) => {
     
@@ -18,28 +19,25 @@ const PostTwit = ( msg ) => {
 
 }
 
-const PostTwitterMedia = ( file ) => {
-
-    //var data = require('fs').readFileSync('image.jpg');
+const PostTwitterMedia = ( fileData, msgText = '' ) => {
 
     return new Promise(resolve => {
         
-        TwitterConnection.post('media/upload', {media: file}, function(error, media, response) {
-    
+        TwitterConnection.post('media/upload', {media: fileData}, function(error, media, response) {
             if (!error) {
-                console.log(media)
                 var status = {
-                    status: 'tweet con imagen',
+                    status: msgText,
                     media_ids: media.media_id_string
                 }
-            
                 TwitterConnection.post('statuses/update', status, function(error, tweet, response) {
                     if (!error) {
-                    console.log(tweet)
+                        var generated_tweet_url = 'https://twitter.com/punikerBot/status/'+tweet.id_str
+                        var response='Se ha publicado tu tweet. '+ generated_tweet_url
+                    } else {
+                        var response='Error al publicar el tweet. Intentelo de nuevo más tarde'
                     }
                     resolve(response)
                 })
-        
             }
         })
 

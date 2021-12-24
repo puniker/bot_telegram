@@ -2,16 +2,20 @@ const axios = require('axios')
 const request = require('request')
 const fs = require('fs')
 const {PostTwit, PostTwitterMedia} = require('../controller/TwitterController')
+const { GetImageBuffer } = require('../controller/Image')
 const SendTelegramMsg = require('../controller/SendTelegramMsg')
 const TelegramService = require('../services/TelegramService')
 
 const Bot = async( msg ) => {
 
     if ( msg.photo ) {
-        const posted_img_url = await TelegramService.GetTelegramImage( msg.photo[0].file_id )
-        console.log('Tiene imagen', posted_img_url)
-        const PostTweetResponse = await PostTwitterMedia(posted_img_url)
-        console.log( PostTweetResponse )
+        const posted_img_url = await TelegramService.GetTelegramImage( msg.photo[3].file_id )
+        const fileData = await GetImageBuffer(posted_img_url)
+        const PostTweetResponse = await PostTwitterMedia( fileData, msg.caption )
+        if ( msg.from.username === process.env.MY_CHAT_ID ) {
+            SendTelegramMsg(`${msg.from.username} ha publicado un tweet con imagen.`)
+        }
+        SendTelegramMsg( PostTweetResponse, msg.chat.id )
     } else if ( msg.text ) {
         
         var tweet_text = `${msg.from.username}: ${msg.text}`
@@ -20,7 +24,7 @@ const Bot = async( msg ) => {
         } 
         const PostTwRes = await PostTwit( tweet_text )
         if ( msg.from.username === process.env.MY_CHAT_ID ) {
-            SendTelegramMsg(`${msg.from.username} ha publicado un tweet`)
+            SendTelegramMsg(`${msg.from.username} ha publicado un tweet.`)
         }
         SendTelegramMsg(PostTwRes, msg.chat.id)
 
